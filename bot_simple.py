@@ -22,7 +22,6 @@ from crypto_payment import crypto_bot
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Инициализация бота
 bot = Bot(
     token=config.BOT_TOKEN,
     default=DefaultBotProperties(parse_mode=ParseMode.HTML)
@@ -153,10 +152,7 @@ def create_payout_keyboard() -> InlineKeyboardMarkup:
     
     return builder.as_markup()
 
-# ==================== ТЕКСТЫ СООБЩЕНИЙ ====================
-
 def get_start_message(user_id: int, user_data: Optional[Dict] = None) -> str:
-    """Приветственное сообщение"""
     balance = user_data.get('available_balance', 0.0) if user_data else 0.0
     sub_status = "❌ отсутствует"
     
@@ -190,7 +186,6 @@ def get_start_message(user_id: int, user_data: Optional[Dict] = None) -> str:
     )
 
 def get_content_message() -> str:
-    """Сообщение о контенте"""
     channels = "\n".join([f"• {channel}" for channel in config.PRIVATE_CHANNELS])
     
     return (
@@ -205,7 +200,6 @@ def get_content_message() -> str:
     )
 
 def get_trial_message() -> str:
-    """Сообщение о тестовом периоде"""
     return (
         f"🎁 <b>Тестовый доступ на 48 часов</b>\n\n"
         
@@ -225,7 +219,6 @@ def get_trial_message() -> str:
     )
 
 def get_subscribe_message() -> str:
-    """Сообщение о подписке"""
     prices = config.PRICES
     
     return (
@@ -251,7 +244,6 @@ def get_subscribe_message() -> str:
     )
 
 def get_profile_message(user_id: int, user_data: Dict) -> str:
-    """Сообщение профиля"""
     created = user_data.get('created_at', 'неизвестно')
     if created and created != 'неизвестно':
         try:
@@ -299,7 +291,6 @@ def get_profile_message(user_id: int, user_data: Dict) -> str:
     )
 
 def get_partner_message(user_data: Dict) -> str:
-    """Сообщение партнерской системы"""
     stats = user_data
     percent = stats.get('ref_percent', 25)
     status = stats.get('ref_status', 'referrer')
